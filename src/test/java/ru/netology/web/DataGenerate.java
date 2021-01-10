@@ -15,12 +15,12 @@ public class DataGenerate {
 
     public static String getName() {
         Faker faker = new Faker(new Locale("ru"));
-        return faker.name().fullName();
+        return faker.name().lastName() + " " + faker.name().firstName();
     }
 
     public static String getPhone() {
         Faker faker = new Faker(new Locale("ru"));
-        return faker.phoneNumber().phoneNumber();
+        return "+7" + faker.number().digits(10);
     }
 
     public static String getCity() {
