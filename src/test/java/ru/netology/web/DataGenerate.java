@@ -23,6 +23,11 @@ public class DataGenerate {
         return "+7" + faker.number().digits(10);
     }
 
+    public static String getInvalidPhone() {
+        Faker faker = new Faker(new Locale("ru"));
+        return "+7" + faker.number().digits(11);
+    }
+
     public static String getCity() {
         Random random = new Random();
         List<String> list = Arrays.asList("Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста", "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск", "Якутск",
