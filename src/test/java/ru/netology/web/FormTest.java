@@ -2,6 +2,8 @@ package ru.netology.web;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -15,7 +17,6 @@ import static ru.netology.web.DataGenerate.*;
 public class FormTest {
     final String city = getCity();
     final String date = getRelevantDate(6);
-//    final String otherDate = getRelevantDate(10);
     final String invalidDate = getIrrelevantDate();
     final String name = getName();
     final String phone = getPhone();
@@ -32,32 +33,9 @@ public class FormTest {
         form.$(cssSelector("[name=phone]")).sendKeys(phone);
         form.$(cssSelector("[data-test-id=agreement]")).click();
         form.$(byText("Забронировать")).click();
-        $(cssSelector(".notification__title")).waitUntil(Condition.visible, 15000);
+        $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
+        //$(byText("Встреча успешно забронирована на " + date)).waitUntil(Condition.visible, 15000);
     }
-
-//    @Test
-//    void shouldGiveNewDateWhenSameRequest() {
-//        open("http://localhost:9999");
-//        SelenideElement form = $("[action]");
-//        form.$(cssSelector("[data-test-id=city] input")).sendKeys(city);
-//        form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
-//        form.$(cssSelector("[data-test-id=date] input")).sendKeys(date);
-//        form.$(cssSelector("[name=name]")).sendKeys(name);
-//        form.$(cssSelector("[name=phone]")).sendKeys(phone);
-//        form.$(cssSelector("[data-test-id=agreement]")).click();
-//        form.$(byText("Забронировать")).click();
-//        $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
-//
-//        open("http://localhost:9999");
-//        form.$(cssSelector("[data-test-id=city] input")).sendKeys(city);
-//        form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
-//        form.$(cssSelector("[data-test-id=date] input")).sendKeys(otherDate);
-//        form.$(cssSelector("[name=name]")).sendKeys(name);
-//        form.$(cssSelector("[name=phone]")).sendKeys(phone);
-//        form.$(cssSelector("[data-test-id=agreement]")).click();
-//        form.$(byText("Забронировать")).click();
-//        $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
-//    }
 
     @Test
     void shouldNotGiveNewDateWhenInvalidDate() {
