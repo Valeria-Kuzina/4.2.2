@@ -2,7 +2,6 @@ package ru.netology.web;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -22,9 +21,13 @@ public class FormTest {
     final String phone = getPhone();
     final String invalidPhone = getInvalidPhone();
 
+    @BeforeEach
+    void setup() {
+        open("http://localhost:9999");
+    }
+
     @Test
     void shouldSubmitRequest() {
-        open("http://localhost:9999");
         SelenideElement form = $("[action]");
         form.$(cssSelector("[data-test-id=city] input")).sendKeys(city);
         form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
@@ -34,12 +37,12 @@ public class FormTest {
         form.$(cssSelector("[data-test-id=agreement]")).click();
         form.$(byText("Забронировать")).click();
         $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
-        //$(byText("Встреча успешно забронирована на " + date)).waitUntil(Condition.visible, 15000);
+        $(".notification__content").shouldHave(Condition.exactText("Встреча успешно забронирована на " + date));
+
     }
 
     @Test
     void shouldNotGiveNewDateWhenInvalidDate() {
-        open("http://localhost:9999");
         SelenideElement form = $("[action]");
         form.$(cssSelector("[data-test-id=city] input")).sendKeys(city);
         form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
@@ -53,7 +56,6 @@ public class FormTest {
 
     @Test
     void shouldNotGiveWhenInvalidPhone() {
-        open("http://localhost:9999");
         SelenideElement form = $("[action]");
         form.$(cssSelector("[data-test-id=city] input")).sendKeys(city);
         form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
